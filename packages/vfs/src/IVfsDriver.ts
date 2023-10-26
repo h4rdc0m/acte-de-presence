@@ -17,6 +17,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import { DirectoryMetadata, DirectoryContents, FileContents, FileMetadata } from ".";
+
 /**
  * Interface for a virtual file system driver.
  */
@@ -44,7 +46,7 @@ export interface IVfsDriver {
      * @param path Can be in the form of `driver:path` or `path`
      * @returns A promise that resolves to an `IVfsDriverResult` containing the file metadata
      */
-    deleteFile(path: string): Promise<IVfsDriverResult<FileMetadata>>;
+    deleteFile(path: string): Promise<IVfsDriverResult<void>>;
 
     /**
      * Lists the contents of a directory asynchronously and returns the result.
@@ -52,7 +54,7 @@ export interface IVfsDriver {
      * @param path Can be in the form of `driver:path` or `path`
      * @returns A promise that resolves to an `IVfsDriverResult` containing the directory contents
      */
-    listDirectory(path: string): Promise<IVfsDriverResult<DirectorySpec>>;
+    listDirectory(path: string): Promise<IVfsDriverResult<DirectoryContents>>;
     
     /**
      * Creates a directory asynchronously and returns the result.
@@ -68,8 +70,9 @@ export interface IVfsDriver {
      * @param path Can be in the form of `driver:path` or `path`
      * @returns A promise that resolves to an `IVfsDriverResult` containing the directory metadata
      */
-    deleteDirectory(path: string): Promise<IVfsDriverResult<DirectoryMetadata>>;
-    ø
+    deleteDirectory(path: string): Promise<IVfsDriverResult<void>>;
+    
+    
     /**
      * Sets permissions on files or directories asynchronously and returns the result.
      * If specific driver is not specified, the default driver is used.
@@ -96,7 +99,7 @@ export interface IVfsDriverResult<T> {
     /**
      * The data returned by the operation.
      */
-    data: T;
+    data?: T;
 
     /**
      * The error, if any, that occurred during the operation.

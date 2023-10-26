@@ -1,0 +1,14 @@
+{
+  "name": "@acte-de-presence/vfs-driver-local",
+  "module": "index.ts",
+  "type": "module",
+  "dependencies": {
+    "@acte-de-presence/vfs": "workspace:*"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

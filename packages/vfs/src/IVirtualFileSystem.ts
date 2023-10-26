@@ -17,6 +17,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import { DirectoryContents, FileContents, FileMetadata, IVfsDriver } from ".";
+
 /**
  * Interface for a virtual file system.
  */
@@ -54,9 +56,9 @@ export interface IVirtualFileSystem {
     /**
      * Deletes a file asynchronously and returns the result.
      * @param path The path of the file to delete
-     * @returns A promise that resolves to the file metadata
+     * @returns A promise that resolves when the file is deleted
      */
-    deleteFile(path: string): Promise<FileMetadata>;
+    deleteFile(path: string): Promise<void>;
 
     /**
      * Creates a directory asynchronously and returns the result.
@@ -77,7 +79,7 @@ export interface IVirtualFileSystem {
      * @param path The path of the directory to list
      * @returns A promise that resolves to the directory contents
      */
-    listDirectory(path: string): Promise<DirectorySpec>;
+    listDirectory(path: string): Promise<DirectoryContents>;
 
     /**
      * Sets permissions on files or directories asynchronously and returns the result.

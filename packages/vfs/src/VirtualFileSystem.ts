@@ -1,4 +1,4 @@
-import { FileContents, FileMetadata } from "./FileSystemTypes";
+import { DirectoryContents, FileContents, FileMetadata } from "./FileSystemTypes";
 import { IVfsDriver } from "./IVfsDriver";
 import { IVirtualFileSystem } from "./IVirtualFileSystem";
 
@@ -25,10 +25,10 @@ export class VirtualFileSystem implements IVirtualFileSystem {
     public async readFile(path: string): Promise<FileContents> {
         const { driver, filePath } = this.getDriverAndPath(path);
         const result = await driver.readFile(filePath);
-        if (result.error) {
+        if (result.error) {     
             throw result.error;
         }
-        return result.data;
+        return result.data || '';
     }
 
     /**
@@ -43,7 +43,7 @@ export class VirtualFileSystem implements IVirtualFileSystem {
         if (result.error) {
             throw result.error;
         }
-        return result.data;
+        return result.data!;
     }
 
     /**
@@ -62,13 +62,13 @@ export class VirtualFileSystem implements IVirtualFileSystem {
      * @param path The path of the file to delete
      * @returns A promise that resolves to the file metadata
      */
-    public async deleteFile(path: string): Promise<FileMetadata> {
+    public async deleteFile(path: string): Promise<void> {
         const { driver, filePath } = this.getDriverAndPath(path);
         const result = await driver.deleteFile(filePath);
         if (result.error) {
             throw result.error;
         }
-        return result.data;
+        return result.data!;
     }
 
     /**
@@ -102,13 +102,13 @@ export class VirtualFileSystem implements IVirtualFileSystem {
      * @param path The path of the directory to list
      * @returns A promise that resolves to the directory contents
      */
-    public async listDirectory(path: string): Promise<DirectorySpec> {
+    public async listDirectory(path: string): Promise<DirectoryContents> {
         const { driver, filePath } = this.getDriverAndPath(path);
         const result = await driver.listDirectory(filePath);
         if (result.error) {
             throw result.error;
         }
-        return result.data;
+        return result.data!;
     }
 
     /**
@@ -136,7 +136,7 @@ export class VirtualFileSystem implements IVirtualFileSystem {
         if (result.error) {
             throw result.error;
         }
-        return result.data;
+        return result.data!;
     }
 
     /**
