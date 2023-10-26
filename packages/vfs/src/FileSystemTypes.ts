@@ -17,7 +17,37 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/**
+ * Type alias for file contents.
+ */
+export type FileContents = string | Uint8Array;
 
-import app from './src';
+/**
+ * Interface for file metadata.
+ */
+export interface FileMetadata {
+    /**
+     * The size of the file in bytes.
+     */
+    size: number;
 
-app.listen();
+    /**
+     * The last modified time of the file.
+     */
+    lastModified: Date;
+}
+
+/**
+ * Interface for directory contents.
+ */
+export interface DirectorySpec {
+    /**
+     * The names of the files and directories in the directory.
+     */
+    entries: string[];
+
+    /**
+     * Whether the directory is empty.
+     */
+    isEmpty: boolean;
+}
