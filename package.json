@@ -1,0 +1,8 @@
+{
+  "name": "acte-de-presence",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
+}
