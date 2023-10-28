@@ -16,23 +16,27 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+import "reflect-metadata"
 
 import { IVfsDriver } from "@acte-de-presence/vfs";
 import { afterAll, beforeAll, describe, expect, test } from 'bun:test';
 import * as fs from 'fs';
 import * as path from 'path';
-import { LocalVfsDriver } from '../src/LocalVfsDriver';
+import '../src/LocalVfsDriver';
+import { Injector, Scope, Token } from "@acte-de-presence/injector";
+import { LocalVfsDriver } from "../src/LocalVfsDriver";
 
 const rootFolder = path.join(import.meta.dir, 'test-folder');
+// const LocalVfsDriverToken = Token.for<LocalVfsDriver>('LocalVfsDriver');
+// Injector.register(LocalVfsDriverToken, LocalVfsDriver, Scope.Singleton, [rootFolder]);
 const driver: IVfsDriver = new LocalVfsDriver(rootFolder);
-
 describe('LocalVfsDriver', () => {
     beforeAll(async () => {
         await fs.promises.mkdir(rootFolder, { recursive: true });
     });
 
     afterAll(async () => {
-        await fs.promises.rmdir(rootFolder, { recursive: true });
+        await fs.promises.rm(rootFolder, { recursive: true });
     });
 
     describe('readFile', () => {
@@ -185,3 +189,4 @@ describe('LocalVfsDriver', () => {
         });
     });
 });
+

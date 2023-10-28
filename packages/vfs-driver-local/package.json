@@ -3,7 +3,9 @@
   "module": "index.ts",
   "type": "module",
   "dependencies": {
-    "@acte-de-presence/vfs": "workspace:*"
+    "@acte-de-presence/injector": "workspace:*",
+    "@acte-de-presence/vfs": "workspace:*",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "bun-types": "latest"

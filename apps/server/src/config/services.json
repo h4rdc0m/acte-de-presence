@@ -1,0 +1,15 @@
+{
+    "services": [
+        {
+            "token": "IVirtualFileSystem",
+            "implementation": "@acte-de-presence/vfs#VirtualFileSystem",
+            "scope": "singleton"
+        },
+        {
+            "token": "LocalVfsDriver",
+            "implementation": "@acte-de-presence/vfs-driver-local#LocalVfsDriver",
+            "scope": "singleton",
+            "params": ["./file-store"]
+        }
+    ]
+}

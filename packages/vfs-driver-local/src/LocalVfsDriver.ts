@@ -20,13 +20,14 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { DirectoryContents, DirectoryMetadata, FileContents, FileMetadata, IVfsDriver, IVfsDriverResult } from "@acte-de-presence/vfs";
+import { DirectoryContents, DirectoryMetadata, FileContents, FileMetadata, IVfsDriverResult, IVfsDriver } from "@acte-de-presence/vfs";
 
 export class LocalVfsDriver implements IVfsDriver {
-    private rootFolder: string;
+    
 
-    constructor(rootFolder: string) {
-        this.rootFolder = rootFolder;
+    constructor(
+        private readonly rootFolder: string,
+    ) {
     }
 
     private getAbsolutePath(filePath: string): string {

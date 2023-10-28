@@ -2,7 +2,10 @@
   "name": "acte-de-presence",
   "private": true,
   "workspaces": [
-    "packages/*",
-    "apps/*"
-  ]
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
+  }
 }

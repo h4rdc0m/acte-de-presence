@@ -17,49 +17,109 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/**
+ * The `Injector` class provides a simple dependency injection container.
+ * It allows you to register services and their dependencies, and then resolve them
+ * at runtime. The `Injector` uses TypeScript's metadata reflection API to automatically
+ * resolve dependencies based on their types.
+ *
+ * @remarks
+ * This file defines the `Injector` class and related interfaces and enums.
+ *
+ * @packageDocumentation
+ */
+
 import { Scope } from "./Scope";
+import { Token } from "./Token";
+import { getDefaultTokenForClass } from "./decorators/getDefaultTokenForClass";
 
-export class Token<T> {
-    constructor(public readonly name: string) {}
-}
-
+/**
+ * The Injector class provides a dependency injection container for managing object dependencies.
+ */
 export class Injector {
-    private static services: Map<Token<any>, { implementation:new (...args: any[]) => any, scope?: Scope, instance?: any }> = new Map();
-    private static dependencies: Map<Function, Token<any>[]> = new Map();
+    //
+    // The above copyright notice and this permission notice shall be included in all
+    // copies or substantial portions of the Software.
+    //
+    // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+    // FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+    // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+    // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+    // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    /**
+     * The `Injector` class provides a simple dependency injection container.
+     * It allows you to register services and their dependencies, and then resolve them
+     * at runtime. The `Injector` uses TypeScript's metadata reflection API to automatically
+     * resolve dependencies based on their types.
+     *
+     * @remarks
+     * This file defines the `Injector` class and related interfaces and enums.
+     *
+     * @packageDocumentation
+     */
 
-    public static register<T>(token: Token<T>, implementation: new (...args: any[]) => T, scope?: Scope) {
-        this.services.set(token, { implementation, scope });
+
+    private readonly bindings: Map<string, Binding<any>> = new Map();
+
+    public constructor() { }
+
+
+    public register<T>(token: Token<T>, clazz: new (...args: any[]) => T, scope: Scope = Scope.Transient): void {
+        token = token || getDefaultTokenForClass(clazz);
+        console.log(`Registering token '${token.name}' with scope '${scope}'.`);
+        if (this.bindings.has(token.toString())) {
+            throw new Error(`Token '${token.name}' is already registered.`);
+        }
+        this.bindings.set(token.toString(), new Binding(token, clazz, scope));
     }
 
-    public static registerDependency(target: Function, token: Token<any>, parameterIndex: number) {
-        if (!this.dependencies.has(target)) {
-            this.dependencies.set(target, []);
+    public resolve<T>(token: Token<T>): T {
+        const binding = this.bindings.get(token.toString());
+        if (!binding) {
+            const availableTokens = [...this.bindings.keys()].map(t => t).join(', ');
+            throw new Error(`No binding found for token: '${token.toString()}'.\nTokens available: ${availableTokens}`);
         }
 
-        const tokens = this.dependencies.get(target);
-        tokens![parameterIndex] = token;
+        // Look up the dependencies from metadata
+        const argsTokens: Token<any>[] = Reflect.getMetadata('custom:inject', binding.cls) || [];
+        const args = argsTokens.map(argToken => this.resolve(argToken));
+
+        if (binding.scope === Scope.Singleton && binding.instance) {
+            return binding.instance;
+        }
+
+        const instance = new binding.cls(...args);
+
+
+
+        if (binding.scope === Scope.Singleton) {
+            binding.instance = instance;
+        }
+
+        return instance;
     }
 
-    public static resolve<T>(token: Token<T>): T {
-        const service = this.services.get(token);
-
-        if (!service) {
-            throw new Error(`No provider for token ${token.name}!`);
+    public registerDependency(targetCls: any, dependencyToken: Token<any>, index: number): void {
+        const binding = [...this.bindings.values()].find(b => b.cls === targetCls);
+        if (!binding) {
+            throw new Error(`No binding found for class: ${targetCls.name}.`);
         }
+        binding.constructorArgs[index] = dependencyToken;
+    }
 
-        if (service.scope === Scope.Singleton && service.instance) {
-            return service.instance;
-        }
-
-        const tokens = this.dependencies.get(service.implementation) || [];
-        const args = tokens.map(t => this.resolve(t));
-
-        const resolved = new service.implementation(...args);
-
-        if (service.scope === Scope.Singleton) {
-            service.instance = resolved;
-        }
-
-        return resolved;
+    public clear(): void {
+        this.bindings.clear();
     }
 }
+
+
+class Binding<T> {
+    instance: T | null = null;
+    constructorArgs: Token<any>[] = [];
+
+    constructor(public token: Token<T>, public cls: new (...args: any[]) => T, public scope: Scope) { }
+}
+
+
+

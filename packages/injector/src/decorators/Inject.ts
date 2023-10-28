@@ -17,10 +17,26 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { Injector, Token } from "../Injector";
+import { Token } from "../Token";
+import { getDefaultTokenForClass } from "./getDefaultTokenForClass";
 
-export function Inject<T>(token: Token<T>) {
-    return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
-        Injector.registerDependency(target.constructor, token, parameterIndex);
-    }
+/**
+ * The Inject decorator is used to specify a dependency injection token for a class property.
+ * @param token The token used to identify the dependency.
+ * @returns A decorator function.
+ */
+export function Inject(token?: Token<any>) {
+    return function (target: any, propertyKey: string | symbol | undefined, parameterIndex: number) {
+        // If it's a constructor injection
+        if (propertyKey === undefined) {
+            const existingInjectedParameters: Token<any>[] = Reflect.getOwnMetadata('custom:inject', target) || [];
+            existingInjectedParameters[parameterIndex] = token || getDefaultTokenForClass(Reflect.getMetadata('design:paramtypes', target)[parameterIndex]);
+            Reflect.defineMetadata('custom:inject', existingInjectedParameters, target);
+            return;
+        }
+        // Handle property or method injections here if needed
+        // ...
+    };
 }
+
+    

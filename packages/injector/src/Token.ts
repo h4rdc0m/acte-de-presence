@@ -17,11 +17,23 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { Scope } from "../Scope";
-import { Injector, Token } from "../Injector";
+/**
+ * The token to inject
+ */
+export class Token<T> {
+    constructor(public readonly name: string) { }
 
-function Injectable<T>(token: Token<T>, scope?: Scope) {
-  return function (target: new (...args: any[]) => T) {
-    Injector.register(token, target, scope);
-  };
+    static from<T>(target: new (...args: any[]) => T): Token<T> {
+        console.log(`Creating token '${target.name}'.`);
+        return new Token<T>(target.name);
+    }
+
+    static for<T>(name: string): Token<T> {
+        console.log(`Creating token '${name}'.`);
+        return new Token<T>(name);
+    }
+
+    toString() {
+        return this.name;
+    }
 }
