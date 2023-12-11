@@ -10,7 +10,7 @@ interface ServiceConfig {
         params?: any[];
     }]
 }
-
+export const injector = new Injector();
 async function initializeServices(configPath: string = './config') {
     try {
         const servicesConfig: ServiceConfig = await import(`${configPath}/services.json`);
@@ -35,7 +35,7 @@ async function initializeServices(configPath: string = './config') {
                 }
 
                 const scope = Scope[service.scope as keyof typeof Scope]; // fix
-                Injector.register(token, implementation, scope, service.params);
+                injector.register(token, implementation, scope, service.params);
             } 
             catch (error) {
                 throw new Error(`Could not load implementation for service '${service.token}' from module '${modulePath}'. With: ${error}`);

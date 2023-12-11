@@ -1,4 +1,4 @@
-import { Token } from "../Token";
+import { Token } from "./Token";
 
 
 export function getDefaultTokenForClass(clazz: any): Token<any> {

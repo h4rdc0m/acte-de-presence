@@ -1,7 +1,7 @@
 import "reflect-metadata";
 
 import { Inject, Injector, Scope, Token } from "../src";
-import { beforeEach, describe, expect, it } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, it } from 'bun:test';
 
 describe("Injector", () => {
   let injector: Injector;
@@ -50,7 +50,7 @@ describe("Injector", () => {
       const token = new Token<TestClass>("TestClass");
 
       expect(() => injector.resolve(token)).toThrow(
-        `No binding found for token: '${token.name}'.\nTokens available: `
+        `No binding found for token: '${token.name}'.`
       );
     });
 
@@ -101,22 +101,26 @@ describe("Injector", () => {
 
   describe("registerDependency", () => {
     it("should register a dependency for a class", () => {
+      const token1 = new Token<TestClass1>("TestClass1");
+      const token2 = new Token<TestClass2>("TestClass2");
+      
       class TestClass1 {}
       class TestClass2 {
         constructor(@Inject() public testClass1: TestClass1) {}
       }
 
-      const token1 = new Token<TestClass1>("TestClass1");
-      const token2 = new Token<TestClass2>("TestClass2");
-
       injector.register(token1, TestClass1);
       injector.register(token2, TestClass2);
+      
+
 
       const instance = injector.resolve(token2);
       expect(instance).toBeInstanceOf(TestClass2);
       expect(instance.testClass1).toBeInstanceOf(TestClass1);
     });
   });
+
+  
 
   describe("clear", () => {
     it("should clear all registered dependencies and instances", () => {
@@ -127,7 +131,7 @@ describe("Injector", () => {
       injector.clear();
 
       expect(() => injector.resolve(token)).toThrow(
-        `No binding found for token: '${token.toString()}'.\nTokens available: `
+        `No binding found for token: '${token.toString()}'.`
       );
     });
   });

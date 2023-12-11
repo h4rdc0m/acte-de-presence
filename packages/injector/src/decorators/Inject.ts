@@ -18,24 +18,35 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import { Token } from "../Token";
-import { getDefaultTokenForClass } from "./getDefaultTokenForClass";
+import { getDefaultTokenForClass } from "../getDefaultTokenForClass";
+
+type InjectConfig = {
+    isOptional?: boolean;
+}
 
 /**
  * The Inject decorator is used to specify a dependency injection token for a class property.
  * @param token The token used to identify the dependency.
  * @returns A decorator function.
  */
-export function Inject(token?: Token<any>) {
+export function Inject(token?: Token<any>, config?: InjectConfig) {
     return function (target: any, propertyKey: string | symbol | undefined, parameterIndex: number) {
-        // If it's a constructor injection
         if (propertyKey === undefined) {
-            const existingInjectedParameters: Token<any>[] = Reflect.getOwnMetadata('custom:inject', target) || [];
-            existingInjectedParameters[parameterIndex] = token || getDefaultTokenForClass(Reflect.getMetadata('design:paramtypes', target)[parameterIndex]);
+            const paramTypes = Reflect.getMetadata('design:paramtypes', target);
+            if (!paramTypes) {
+                throw new Error("Parameter types metadata not found.");
+            }
+
+            const existingInjectedParameters: Array<{token: Token<any>, isOptional: boolean}> = Reflect.getOwnMetadata('custom:inject', target) || [];
+            const injectionToken = token || getDefaultTokenForClass(paramTypes[parameterIndex]);
+
+            existingInjectedParameters.splice(parameterIndex, 0, {
+                token: injectionToken,
+                isOptional: config?.isOptional || false,
+            });
+
             Reflect.defineMetadata('custom:inject', existingInjectedParameters, target);
-            return;
         }
-        // Handle property or method injections here if needed
-        // ...
     };
 }
 
