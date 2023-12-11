@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 166.06 37.17">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-1, .cls-3, .cls-5 {
+        stroke: #0f242f;
+      }
+
+      .cls-2 {
+        stroke: #091d23;
+      }
+
+      .cls-2, .cls-6 {
+        fill: #fff;
+      }
+
+      .cls-6 {
+        font-family: OpenSans-Bold, 'Open Sans';
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .cls-3, .cls-5 {
+        fill: #0f242f;
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient);
+        stroke: #0a1d23;
+      }
+
+      .cls-5 {
+        stroke-width: .75px;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="5.8" y1="31.37" x2="31.37" y2="5.8" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f242f"/>
+      <stop offset="1" stop-color="#6fcbd0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="66.49" y1="38.47" x2="89.37" y2="38.47" gradientTransform="translate(-49.28 -35.7) rotate(12.38)" xlink:href="#linear-gradient"/>
+  </defs>
+  <g>
+    <rect class="cls-5" x=".72" y="8.9" width="164.97" height="20" rx="8.5" ry="8.5"/>
+    <text class="cls-6" transform="translate(45.25 23.64)"><tspan x="0" y="0">ACTE DE PRÉSENCE</tspan></text>
+  </g>
+  <g>
+    <circle class="cls-4" cx="18.58" cy="18.58" r="18.08"/>
+    <circle class="cls-2" cx="18.58" cy="18.58" r="15.37"/>
+    <path class="cls-1" d="M6.59,23.05s-.92-5.31,2.27-6.07,9.66,7.75,9.66,7.75l9.54-15.68s1.12-1.53,2.73-.55,1.14,2.65,1.14,2.65l-12.62,20.49s-10.28-11.85-11.27-11.6-1.44,3.01-1.44,3.01Z"/>
+    <circle class="cls-3" cx="17.48" cy="12.52" r="3.88"/>
+  </g>
+</svg>

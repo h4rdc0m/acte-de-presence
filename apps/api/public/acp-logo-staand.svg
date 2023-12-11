@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="ACP_logo" data-name="ACP logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 132.67 157.79">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke-width: 2px;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-1, .cls-2, .cls-5 {
+        stroke: #0f242f;
+      }
+
+      .cls-1, .cls-5 {
+        fill: #0f242f;
+      }
+
+      .cls-6 {
+        font-family: OpenSans-Bold, 'Open Sans';
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .cls-6, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-3 {
+        stroke: #091d23;
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient);
+        stroke: #0a1d23;
+      }
+
+      .cls-5 {
+        stroke-width: .75px;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="20.14" y1="112.53" x2="112.53" y2="20.14" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f242f"/>
+      <stop offset="1" stop-color="#6fcbd0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="81.25" y1="82.58" x2="163.92" y2="82.58" gradientTransform="translate(-35.68 -40.62) rotate(12.38)" xlink:href="#linear-gradient"/>
+  </defs>
+  <g>
+    <circle class="cls-4" cx="66.33" cy="66.33" r="65.33"/>
+    <circle class="cls-3" cx="66.33" cy="66.33" r="55.53"/>
+    <path class="cls-2" d="M23,82.46s-3.32-19.18,8.2-21.93c11.52-2.74,34.9,28,34.9,28l34.47-56.64s4.04-5.52,9.85-1.98c5.81,3.54,4.11,9.57,4.11,9.57l-45.6,74.03s-37.14-42.81-40.73-41.9-5.21,10.86-5.21,10.86Z"/>
+    <circle class="cls-1" cx="62.33" cy="44.42" r="14"/>
+  </g>
+  <g>
+    <rect class="cls-5" x="1" y="137.42" width="130.94" height="20" rx="8.5" ry="8.5"/>
+    <text class="cls-6" transform="translate(11.53 152.16)"><tspan x="0" y="0">ACTE DE PRÉSENCE</tspan></text>
+  </g>
+</svg>

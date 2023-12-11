@@ -9,6 +9,9 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@acte-de-presence/injector": "workspace:*",
+    "@acte-de-presence/vfs": "workspace:*",
+    "@acte-de-presence/vfs-driver-local": "workspace:*",
     "@stricjs/router": "^5.0.6",
     "@stricjs/utils": "^1.6.1"
   }

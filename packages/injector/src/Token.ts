@@ -24,12 +24,10 @@ export class Token<T> {
     constructor(public readonly name: string) { }
 
     static from<T>(target: new (...args: any[]) => T): Token<T> {
-        console.log(`Creating token '${target.name}'.`);
         return new Token<T>(target.name);
     }
 
     static for<T>(name: string): Token<T> {
-        console.log(`Creating token '${name}'.`);
         return new Token<T>(name);
     }
 

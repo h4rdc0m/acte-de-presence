@@ -29,7 +29,7 @@ export class Injector {
 
         // Resolve constructor dependencies
         const dependencies = Reflect.getMetadata('custom:inject', binding.cls) || [];
-        const args = dependencies.map(dep => {
+        const args = dependencies.map((dep: { token: Token<unknown>; isOptional: any; }) => {
             const depBinding = this.bindings.get(dep.token.toString());
             if (!depBinding) {
                 if (dep.isOptional) return undefined;

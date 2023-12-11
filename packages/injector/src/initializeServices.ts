@@ -35,7 +35,7 @@ async function initializeServices(configPath: string = './config') {
                 }
 
                 const scope = Scope[service.scope as keyof typeof Scope]; // fix
-                injector.register(token, implementation, scope, service.params);
+                injector.register(token, implementation, scope);
             } 
             catch (error) {
                 throw new Error(`Could not load implementation for service '${service.token}' from module '${modulePath}'. With: ${error}`);

@@ -14,7 +14,6 @@ describe("Inject decorator", () => {
 
     const metadata = Reflect.getOwnMetadata("custom:inject", TestClass);
 
-    console.log(metadata);
     expect(metadata).toEqual([{token: token, isOptional: false}]);
   });
 
@@ -26,7 +25,6 @@ describe("Inject decorator", () => {
 
     const metadata = Reflect.getOwnMetadata("custom:inject", TestClass);
 
-    console.log(metadata);
     expect(metadata).toEqual([{token: token, isOptional: true}]);
   });
 });

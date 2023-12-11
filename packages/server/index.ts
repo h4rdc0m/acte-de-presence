@@ -18,6 +18,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-import app from './src';
-
-app.listen();
+Bun.serve({
+    fetch(reg: Request) {
+        return new Response("HI!");
+    }
+});
